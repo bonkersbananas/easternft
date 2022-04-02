@@ -1,0 +1,12 @@
+{
+    "name": "Easter Test NFT",
+    "artist": "Bonkers Bananas",
+    "image": "https://drive.google.com/uc?export=view&id=1ozSwgq62ZY1Ygk2kw5LTPeTW0ULXZgDe",
+    "attributes": [
+        {
+            "trait_type": "artist",
+            "value": "Bonkers Bananas"
+        }
+    ],
+    "description": "Test project for the easter NFT drop."
+}

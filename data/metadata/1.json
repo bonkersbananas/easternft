@@ -1,7 +1,7 @@
 {
-    "name": "Easter Test NFT",
+    "name": "Easter Test NFT #1",
     "artist": "Bonkers Bananas",
-    "image": "https://drive.google.com/uc?export=view&id=1ozSwgq62ZY1Ygk2kw5LTPeTW0ULXZgDe",
+    "image": "https://easter.infura-ipfs.io/ipfs/QmcYYnzVeXhaZxUF6T5xLWTfUfoRxKzVC9Aw4DA5AzgGYY/1.png",
     "attributes": [
         {
             "trait_type": "artist",

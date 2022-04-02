@@ -1,0 +1,12 @@
+{
+    "name": "Easter Test NFT #2",
+    "artist": "Secret Artist",
+    "image": "https://easter.infura-ipfs.io/ipfs/QmcYYnzVeXhaZxUF6T5xLWTfUfoRxKzVC9Aw4DA5AzgGYY/2.png",
+    "attributes": [
+        {
+            "trait_type": "artist",
+            "value": "Secret Artist"
+        }
+    ],
+    "description": "Test project for the easter NFT drop."
+}

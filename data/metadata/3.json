@@ -1,0 +1,12 @@
+{
+    "name": "Easter Test NFT #3",
+    "artist": "Ggrrrrrgglll",
+    "image": "https://easter.infura-ipfs.io/ipfs/QmcYYnzVeXhaZxUF6T5xLWTfUfoRxKzVC9Aw4DA5AzgGYY/3.png",
+    "attributes": [
+        {
+            "trait_type": "artist",
+            "value": "Ggrrrrrgglll"
+        }
+    ],
+    "description": "Test project for the easter NFT drop."
+}

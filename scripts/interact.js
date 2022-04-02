@@ -7,7 +7,7 @@ const contract = require("../artifacts/contracts/HelloWorld.sol/HelloWorld.json"
 // console.log(JSON.stringify(contract.abi));
 
 // Provider
-const alchemyProvider = new ethers.providers.AlchemyProvider(network="matic", API_KEY);
+const alchemyProvider = new ethers.providers.AlchemyProvider(network="maticmum", API_KEY);
 
 // Signer
 const signer = new ethers.Wallet(PRIVATE_KEY, alchemyProvider);

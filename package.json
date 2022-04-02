@@ -1,0 +1,19 @@
+{
+  "name": "easternft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bonkersbananas/easternft.git"
+  },
+  "author": "",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/bonkersbananas/easternft/issues"
+  },
+  "homepage": "https://github.com/bonkersbananas/easternft#readme"
+}

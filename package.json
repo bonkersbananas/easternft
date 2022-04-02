@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/bonkersbananas/easternft/issues"
   },
-  "homepage": "https://github.com/bonkersbananas/easternft#readme"
+  "homepage": "https://github.com/bonkersbananas/easternft#readme",
+  "devDependencies": {
+    "hardhat": "^2.9.2"
+  }
 }

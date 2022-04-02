@@ -18,5 +18,8 @@
   "homepage": "https://github.com/bonkersbananas/easternft#readme",
   "devDependencies": {
     "hardhat": "^2.9.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
   }
 }

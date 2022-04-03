@@ -17,16 +17,12 @@ const nftContract = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signer);
 
 
 async function main() {
-    console.log(`Minting 1 NFT from ${CONTRACT_ADDRESS} ...`);
-    const tx = await nftContract.mint({ gasLimit: 100000 });
+    console.log(`Updating isMintable on ${CONTRACT_ADDRESS} ...`);
+    const tx = await nftContract.toggleMintable(true);
     console.log("* Transaction ID:", tx.hash);
-    await tx.wait().then((receipt) => {
-
-    }, (error) => {
-        console.log(error);
-        console.log(error.method);
-        console.log(error.errorSignature);
-    });
+    console.log("isMintable:", nftContract.isMintable());
+    await tx.wait();
     console.log("Done!");
+    console.log("isMintable now:", nftContract.isMintable());
 }
 main();

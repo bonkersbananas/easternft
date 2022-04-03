@@ -18,11 +18,12 @@ const nftContract = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signer);
 
 async function main() {
     console.log(`Updating isMintable on ${CONTRACT_ADDRESS} ...`);
+    console.log("isMintable:", await nftContract.isMintable());
+
     const tx = await nftContract.toggleMintable(true);
     console.log("* Transaction ID:", tx.hash);
-    console.log("isMintable:", nftContract.isMintable());
     await tx.wait();
-    console.log("Done!");
-    console.log("isMintable now:", nftContract.isMintable());
+
+    console.log("isMintable now:", await nftContract.isMintable());
 }
 main();

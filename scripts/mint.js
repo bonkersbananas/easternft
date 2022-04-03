@@ -21,12 +21,11 @@ async function main() {
     const tx = await nftContract.mint({ gasLimit: 100000 });
     console.log("* Transaction ID:", tx.hash);
     await tx.wait().then((receipt) => {
-
+        console.log("Done!");
     }, (error) => {
         console.log(error);
-        console.log(error.method);
-        console.log(error.errorSignature);
+        console.log(error.code);
+        console.log(error.receipt.logs);
     });
-    console.log("Done!");
 }
 main();

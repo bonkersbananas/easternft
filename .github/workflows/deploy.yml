@@ -8,7 +8,7 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v3
-    - nane: setup node
+    - name: setup node
       uses: actions/setup-node@v3
       with:
         node-version: '14'
@@ -16,7 +16,7 @@ jobs:
       run: npm install
     - name: Compile
       run: npx hardhat compile
-    - name: Deploy contract
+    - name: deploy contract
       id: deploy
       run: set -e pipefail ; npx hardhat run scripts/deploy.js | sed 's/^/::set-output name=contract_address::/'
       env:
@@ -24,13 +24,13 @@ jobs:
         API_URL: ${{ secrets.ALCHEMY_API_URL }}
         PRIVATE_KEY: ${{ secrets.TESTNET_PRIVATE_KEY }}
         POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
-    - name: Contract address (output)
+    - name: (output) contract address
       run: echo $CONTRACT_ADDRESS
       env:
         CONTRACT_ADDRESS: ${{ steps.deploy.outputs.contract_address }}
-    - name: Waiting a minute for block confirmations
-      run: sleep 5
-    - name: Verify contract code
+    - name: waiting 30 seconds for block confirmations
+      run: sleep 30
+    - name: verify contract code
       run: |
         (echo "-- verify attempt: #1 --" && npx hardhat verify $CONTRACT_ADDRESS && "-- verification ready --") || \
         (echo "-- waiting 10 seconds --" && sleep 10 && echo "-- verify attempt: #2 --" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -E '(Reason: Already Verified|Successfully verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "-- verification ready --"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "-- verification ready --") || \

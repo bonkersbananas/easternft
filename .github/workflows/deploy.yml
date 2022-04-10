@@ -1,10 +1,11 @@
 ---
-name: Deploy contracts to Polygon testnet
+name: Deploy contracts to testnet
 on: [workflow_dispatch]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    name: Compile and deploy
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -29,20 +30,20 @@ jobs:
         API_URL: ${{ secrets.ALCHEMY_API_URL }}
         PRIVATE_KEY: ${{ secrets.TESTNET_PRIVATE_KEY }}
         POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
-    - name: (output) contract address
+    - name: Contract deployed - address output
       run: echo $CONTRACT_ADDRESS
       env:
         CONTRACT_ADDRESS: ${{ steps.deploy.outputs.contract_address }}
     - name: Wait 60 seconds for block confirmations
-      run: sleep 60
-    - name: Verify contract code on explorer
+      run: echo "··· ⏳ waiting 60 seconds" && sleep 60
+    - name: Verify contract code on Etherscan / Polygonscan
       run: |
-        (echo "-- verify attempt: #1 --" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "-- verification ready --"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "-- verification ready --") || \
-        (echo "-- waiting 10 seconds --" && sleep 10 && echo "-- verify attempt: #2 --" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "-- verification ready --"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "-- verification ready --") || \
-        (echo "-- waiting 15 seconds --" && sleep 15 && echo "-- verify attempt: #3 --" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "-- verification ready --"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "-- verification ready --") || \
-        (echo "-- waiting 20 seconds --" && sleep 20 && echo "-- verify attempt: #4 --" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "-- verification ready --"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "-- verification ready --") || \
-        (echo "-- waiting 30 seconds --" && sleep 30 && echo "-- verify attempt: #5 --" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "-- verification ready --"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "-- verification ready --") || \
-        (echo "-- verify failed --" && exit 1)
+        (echo "··· 👀 verify attempt: #1" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "··· ✅ verification ready"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "··· ✅ verification ready") || \
+        (echo "··· ⏳ waiting 10 seconds" && sleep 10 && echo "··· 👀 verify attempt: #2" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "··· ✅ verification ready"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "··· ✅ verification ready") || \
+        (echo "··· ⏳ waiting 15 seconds" && sleep 15 && echo "··· 👀 verify attempt: #3" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "··· ✅ verification ready"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "··· ✅ verification ready") || \
+        (echo "··· ⏳ waiting 20 seconds" && sleep 20 && echo "··· 👀 verify attempt: #4" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "··· ✅ verification ready"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "··· ✅ verification ready") || \
+        (echo "··· ⏳ waiting 30 seconds" && sleep 30 && echo "··· 👀 verify attempt: #5" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "··· ✅ verification ready"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "··· ✅ verification ready") || \
+        (echo "··· ❌ fail: verify error" && exit 1)
       env:
         API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
         API_URL: ${{ secrets.ALCHEMY_API_URL }}

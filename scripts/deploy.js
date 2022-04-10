@@ -3,7 +3,7 @@ async function main() {
 
     // Start deployment, returning a promise that resolves to a contract object
     const contract = await ContractFactory.deploy();
-    console.log("Contract deployed to address:", contract.address);
+    console.log(contract.address);
  }
 
  main()

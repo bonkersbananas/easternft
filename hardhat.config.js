@@ -6,20 +6,23 @@ require('dotenv').config();
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
 
-const { POLYGONSCAN_API_KEY, API_URL, PRIVATE_KEY } = process.env;
+const default_network = "matic";
+const api_url = process.env.API_URL || process.env.ALCHEMY_API_URL;
+const private_key = process.env.PRIVATE_KEY || process.env.TESTNET_PRIVATE_KEY;
+const etherscan_api_key = process.env.POLYGONSCAN_API_KEY || process.env.ETHERSCAN_API_KEY;
 
 
 module.exports = {
     solidity: "0.8.4",
-    defaultNetwork: "matic",
+    defaultNetwork: default_network,
     networks: {
         hardhat: {},
         matic: {
-            url: API_URL,
-            accounts: [`${PRIVATE_KEY}`]
+            url: api_url,
+            accounts: [`${private_key}`]
         }
     },
     etherscan: {
-        apiKey: POLYGONSCAN_API_KEY,
+        apiKey: etherscan_api_key,
     },
 }

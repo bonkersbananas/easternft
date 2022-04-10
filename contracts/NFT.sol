@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: CC0-1.0
+
 pragma solidity ^0.8.4;
 
 import "./ERC721A.sol";
@@ -21,7 +23,7 @@ contract NFT is ERC721A {
 
     function mint() external payable {
         if (!isMintable) revert MintNotStarted({
-            mintable: isMintable, 
+            mintable: isMintable,
             error: "Mint not started yet"
         });
         _safeMint(msg.sender, 1);

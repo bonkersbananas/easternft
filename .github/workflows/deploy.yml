@@ -21,7 +21,6 @@ jobs:
         API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
         API_URL: ${{ secrets.ALCHEMY_API_URL }}
         PRIVATE_KEY: ${{ secrets.TESTNET_PRIVATE_KEY }}
-        POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
     - name: Deploy contract to blockchain
       id: deploy
       run: |
@@ -32,16 +31,15 @@ jobs:
         API_URL: ${{ secrets.ALCHEMY_API_URL }}
         PRIVATE_KEY: ${{ secrets.TESTNET_PRIVATE_KEY }}
         POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
-    - name: Contract deployed - address output
-      run: echo $CONTRACT_ADDRESS
-      env:
-        CONTRACT_ADDRESS: ${{ steps.deploy.outputs.contract_address }}
+        ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
     - name: Wait 60 seconds for block confirmations
       run: |
+        echo ; \
         echo "··· ⏳ waiting 60 seconds" && \
         sleep 60
     - name: Verify contract code on Etherscan / Polygonscan
       run: |
+        echo ; \
         (echo "··· 👀 verify attempt: #1" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "··· ✅ verification ready"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "··· ✅ verification ready") || \
         (echo "··· ⏳ waiting 10 seconds" && sleep 10 && echo "··· 👀 verify attempt: #2" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "··· ✅ verification ready"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "··· ✅ verification ready") || \
         (echo "··· ⏳ waiting 15 seconds" && sleep 15 && echo "··· 👀 verify attempt: #3" && cmd_output=$(npx hardhat verify $CONTRACT_ADDRESS 2>&1); cmd_exit_code=${PIPESTATUS[0]}; if [[ "$cmd_exit_code" -eq 0 ]] || grep -iE '(reason: already verified|successfully verified|contract source code already verified)' <<< "$cmd_output" > /dev/null; then echo "$cmd_output"; echo "··· ✅ verification ready"; exit 0; fi; echo "$cmd_output" && [[ "$cmd_exit_code" -eq 0 ]] && echo "··· ✅ verification ready") || \
@@ -53,7 +51,13 @@ jobs:
         API_URL: ${{ secrets.ALCHEMY_API_URL }}
         PRIVATE_KEY: ${{ secrets.TESTNET_PRIVATE_KEY }}
         POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
+        ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
         CONTRACT_ADDRESS: ${{ steps.deploy.outputs.contract_address }}
-#        INFURA_ID: ${{ secrets.INFURA_ID }}
-#        INFURA_SECRET: ${{ secrets.INFURA_SECRET }}
-#        INFURA_API_ENDPOINT: ${{ secrets.INFURA_API_ENDPOINT }}
+    - name: Deploy complete - output paths
+      run: |
+        echo ; \
+        echo "contract  ->  $CONTRACT_ADDRESS" ; \
+        echo "explorer  ->  https://$EXPLORER_HOST/address/$CONTRACT_ADDRESS#code"
+      env:
+        CONTRACT_ADDRESS: ${{ steps.deploy.outputs.contract_address }}
+        EXPLORER_HOST: mumbai.polygonscan.com

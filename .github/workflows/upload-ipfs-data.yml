@@ -50,6 +50,7 @@ jobs:
         INFURA_SECRET: ${{ secrets.INFURA_SECRET }}
     - name: Upload complete - output paths
       run: |
+        echo ; \
         echo "metadata [cid: $IPFS_METADATA_HASH]  ->  $IPFS_IMAGE_BASE$IPFS_METADATA_HASH" ; \
         echo "images   [cid: $IPFS_IMAGE_HASH]  ->  $IPFS_IMAGE_BASE$IPFS_IMAGE_HASH"
       env:

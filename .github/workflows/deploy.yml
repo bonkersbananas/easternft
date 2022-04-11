@@ -100,21 +100,21 @@ jobs:
         cp -R artifacts deployments/$DEPLOY_NETWORK/ ; \
         git config --global user.name 'github-actions[bot]' ; \
         git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com' ; \
-        cat deployments/addresses.js \
-          | jq -M ".network.$DEPLOY_NETWORK.contract_address |= \"$CONTRACT_ADDRESS\"" \
-          | jq -M ".network.$DEPLOY_NETWORK.git_branch |= \"`git rev-parse --abbrev-ref HEAD`\"" \
-          | jq -M ".network.$DEPLOY_NETWORK.git_commit_hash |= \"\"" \
-          | jq -M ".network.$DEPLOY_NETWORK.deploy_timestamp |= \"$DEPLOY_TIMESTAMP\"" \
-          > deployments/addresses.tmp.js ; \
-        mv deployments/addresses.tmp.js deployments/addresses.js ; \
+        cat deployments/addresses.json \
+          | jq -M ".deployments.$DEPLOY_NETWORK.contractAddress |= \"$CONTRACT_ADDRESS\"" \
+          | jq -M ".deployments.$DEPLOY_NETWORK.gitBranch |= \"`git rev-parse --abbrev-ref HEAD`\"" \
+          | jq -M ".deployments.$DEPLOY_NETWORK.gitCommitHash |= \"\"" \
+          | jq -M ".deployments.$DEPLOY_NETWORK.deployTimestamp |= \"$DEPLOY_TIMESTAMP\"" \
+          > deployments/addresses.tmp.json ; \
+        mv deployments/addresses.tmp.json deployments/addresses.json ; \
         CONTRACT_ADDRESS_SHORT=`sed 's/^\(.....\).*\(....\)$/\1...\2/' <<< $CONTRACT_ADDRESS` ; \
-        git add deployments/addresses.js deployments/$DEPLOY_NETWORK/artifacts ; \
+        git add deployments/addresses.json deployments/$DEPLOY_NETWORK/artifacts ; \
         git commit -m "[1/2] Deployment via GHA [$DEPLOY_NETWORK -> $CONTRACT_ADDRESS_SHORT]" ; \
-        cat deployments/addresses.js \
-          | jq -M ".network.$DEPLOY_NETWORK.git_commit_hash |= \"`git rev-parse HEAD`\"" \
-          > deployments/addresses.tmp.js ; \
-        mv deployments/addresses.tmp.js deployments/addresses.js ; \
-        git add deployments/addresses.js ; \
+        cat deployments/addresses.json \
+          | jq -M ".deployments.$DEPLOY_NETWORK.gitCommitHash |= \"`git rev-parse HEAD`\"" \
+          > deployments/addresses.tmp.json ; \
+        mv deployments/addresses.tmp.json deployments/addresses.json ; \
+        git add deployments/addresses.json ; \
         git commit -m "[2/2] Deployment via GHA [$DEPLOY_NETWORK -> $CONTRACT_ADDRESS_SHORT]" ; \
         git push
       env:

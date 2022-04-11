@@ -4,8 +4,10 @@ pragma solidity ^0.8.4;
 
 import "./ERC721A.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 error MintNotStarted(bool mintable, string error);
+error MintFinished(string error);
 
 contract NFT is ERC721A {
     using Strings for uint256;
@@ -30,8 +32,10 @@ contract NFT is ERC721A {
             mintable: isMintable,
             error: "Mint not started yet"
         });
-        require (totalSupply() < maxSupply);
-        
+        if (!(totalSupply() < maxSupply)) revert MintFinished({
+            error: "No more supply to mint."
+        });
+
         _safeMint(msg.sender, 1);
     }
 

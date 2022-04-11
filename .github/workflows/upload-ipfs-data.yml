@@ -30,7 +30,7 @@ jobs:
       run: |
         set -e pipefail ; mkdir -p "$TMP_ROOT/data/metadata"; \
         for file in `find data/metadata/*.json`; do \
-          cat $file | jq ".image |= \"$IPFS_IMAGE_BASE$IPFS_IMAGE_HASH/`basename $file .json`.png\"" > "$TMP_ROOT/$file"; \
+          cat $file | jq -M ".image |= \"$IPFS_IMAGE_BASE$IPFS_IMAGE_HASH/`basename $file .json`.png\"" > "$TMP_ROOT/$file"; \
         done
       env:
         TMP_ROOT: ${{ runner.temp }}

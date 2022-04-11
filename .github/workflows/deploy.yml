@@ -108,13 +108,13 @@ jobs:
           > deployments/addresses.tmp.js ; \
         mv deployments/addresses.tmp.js deployments/addresses.js ; \
         git add deployments/addresses.js deployments/$DEPLOY_NETWORK/artifacts ; \
-        git commit -m "Deployed contracts via github action (1/2 - artifacts)" ; \
+        git commit -m "Deployed $CONTRACT_ADDRESS contracts via github action (1/2 - artifacts)" ; \
         cat deployments/addresses.js \
           | jq -M ".network.$DEPLOY_NETWORK.git_commit_hash |= \"`git rev-parse HEAD`\"" \
           > deployments/addresses.tmp.js ; \
         mv deployments/addresses.tmp.js deployments/addresses.js ; \
         git add deployments/addresses.js ; \
-        git commit -m "Deployed contracts via github action (2/2 - contract address)" ; \
+        git commit -m "Deployed $CONTRACT_ADDRESS contracts via github action (2/2 - contract address)" ; \
         git push
       env:
         DEPLOY_NETWORK: ${{ steps.values.outputs.deploy_network }}

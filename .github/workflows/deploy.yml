@@ -110,7 +110,7 @@ jobs:
         git add deployments/addresses.js deployments/$DEPLOY_NETWORK/artifacts ; \
         git commit -m "Deployed contracts via github action (1/2 - artifacts)" ; \
         cat deployments/addresses.js \
-          | jq -M ".network.$DEPLOY_NETWORK.git_commit_hash |= \"`git rev-parse HEAD`\"" ; \
+          | jq -M ".network.$DEPLOY_NETWORK.git_commit_hash |= \"`git rev-parse HEAD`\"" \
           > deployments/addresses.tmp.js ; \
         mv deployments/addresses.tmp.js deployments/addresses.js ; \
         git add deployments/addresses.js ; \

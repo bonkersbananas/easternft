@@ -8,9 +8,9 @@ on:
         type: choice
         description: Deploy to network
         required: true
-        default: 'Polygon Mumbai - Testnet'
+        default: 'Polygon Testnet Mumbai'
         options:
-        - 'Polygon Mumbai - Testnet'
+        - 'Polygon Testnet Mumbai'
 
 jobs:
   deploy:
@@ -22,8 +22,8 @@ jobs:
       run: |
         echo ; \
         DEPLOY_NETWORK= ; \
-        if [ -z $INPUT_DEPLOY_NETWORK ]; then INPUT_DEPLOY_NETWORK="Polygon Mumbai - Testnet"; fi ; \
-        if [[ "$INPUT_DEPLOY_NETWORK" == "Polygon Mumbai - Testnet" ]]; then DEPLOY_NETWORK=maticmum; EXPLORER_HOST=mumbai.polygonscan.com; CHAIN_ID=80001; fi ; \
+        if [ -z $INPUT_DEPLOY_NETWORK ]; then INPUT_DEPLOY_NETWORK="Polygon Testnet Mumbai"; fi ; \
+        if [[ "$INPUT_DEPLOY_NETWORK" == "Polygon Testnet Mumbai" ]]; then DEPLOY_NETWORK=maticmum; EXPLORER_HOST=mumbai.polygonscan.com; CHAIN_ID=80001; fi ; \
         if [ -z $DEPLOY_NETWORK ]; then exit 1; fi ; \
         echo "::set-output name=deploy_network::$DEPLOY_NETWORK" ; \
         echo "::set-output name=chain_id::$CHAIN_ID" ; \

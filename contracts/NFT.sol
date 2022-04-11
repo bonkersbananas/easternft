@@ -12,13 +12,15 @@ contract NFT is ERC721A {
 
     mapping (address => bool) private _owners;
     string private _tokenBaseURI;
+    string private _nonRevealedTokenURI;
     bool public isMintable;
 
     constructor() ERC721A("EasterNFT", "EASTERNFT") {
         isMintable = false;
         _owners[0x993C95A0447C7f700Ff807995d52EF7579ec155C] = true;
         _owners[0xD36eBD3cF04fd1B022Ec71f6D6eB8E1d494FB288] = true;
-        _tokenBaseURI = 'https://easter.infura-ipfs.io/ipfs/QmWqZ42geRPgZ7wy8kpMr7jUFoSasfSzHr8u4oBCNQyjau/';
+        _tokenBaseURI = 'https://bafybeidy5lzy2des2s2debhvnhqttv3v7i5owjd4vlknaylay7y4ar5rai.ipfs.infura-ipfs.io/';
+        _nonRevealedTokenURI = '';
     }
 
     function mint() external payable {
@@ -46,6 +48,10 @@ contract NFT is ERC721A {
         _tokenBaseURI = baseURI;
     }
 
+    function setNonRevealedTokenURI(string memory nonRevealedTokenURI) external onlyOwner {
+        _nonRevealedTokenURI = nonRevealedTokenURI;
+    }
+
     function _startTokenId() internal view virtual override returns (uint256) {
         return 1;
     }
@@ -53,6 +59,6 @@ contract NFT is ERC721A {
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         if (!_exists(tokenId)) revert URIQueryForNonexistentToken();
 
-        return string(abi.encodePacked(_tokenBaseURI, tokenId.toString(), ".json"));
+        return bytes(_tokenBaseURI).length != 0 ? string(abi.encodePacked(_tokenBaseURI, tokenId.toString(), ".json")) : _nonRevealedTokenURI;
     }
 }

@@ -1,0 +1,58 @@
+---
+name: Upload data to IPFS
+on: [workflow_dispatch]
+
+jobs:
+  ipfs_upload:
+    runs-on: ubuntu-latest
+    name: Upload to IPFS
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '^1.17.0'
+    - name: Install infura ipfs-upload-client
+      run: go install github.com/INFURA/ipfs-upload-client@v0.1.1
+      env:
+        GOPATH: ${{ runner.temp }}/go
+    - name: Upload images to IPFS
+      id: upload_images
+      run: |
+        set -e pipefail ; \
+        $GOPATH/bin/ipfs-upload-client --id $INFURA_ID --secret $INFURA_SECRET data/images | sed 's/^\/ipfs\//::set-output name=ipfs_image_hash::/'
+      env:
+        GOPATH: ${{ runner.temp }}/go
+        INFURA_ID: ${{ secrets.INFURA_ID }}
+        INFURA_SECRET: ${{ secrets.INFURA_SECRET }}
+    - name: Set metadata image hash for temporary metadata objects
+      run: |
+        set -e pipefail ; mkdir -p "$TMP_ROOT/data/metadata"; \
+        for file in `find data/metadata/*.json`; do \
+          cat $file | jq ".image |= \"$IPFS_IMAGE_BASE$IPFS_IMAGE_HASH/`basename $file .json`.png\"" > "$TMP_ROOT/$file"; \
+        done
+      env:
+        TMP_ROOT: ${{ runner.temp }}
+        IPFS_IMAGE_HASH: ${{ steps.upload_images.outputs.ipfs_image_hash }}
+        IPFS_IMAGE_BASE: https://easter.infura-ipfs.io/ipfs/
+        INFURA_ID: ${{ secrets.INFURA_ID }}
+        INFURA_SECRET: ${{ secrets.INFURA_SECRET }}
+    - name: Upload metadata to IPFS
+      id: upload_metadata
+      run: |
+        set -e pipefail ; \
+        $GOPATH/bin/ipfs-upload-client --id $INFURA_ID --secret $INFURA_SECRET "$TMP_ROOT/data/metadata" | sed 's/^\/ipfs\//::set-output name=ipfs_metadata_hash::/'
+      env:
+        GOPATH: ${{ runner.temp }}/go
+        TMP_ROOT: ${{ runner.temp }}
+        INFURA_ID: ${{ secrets.INFURA_ID }}
+        INFURA_SECRET: ${{ secrets.INFURA_SECRET }}
+    - name: Upload complete - output paths
+      run: |
+        echo "metadata [cid: $IPFS_METADATA_HASH]  ->  $IPFS_IMAGE_BASE$IPFS_METADATA_HASH" ; \
+        echo "images   [cid: $IPFS_IMAGE_HASH]  ->  $IPFS_IMAGE_BASE$IPFS_IMAGE_HASH"
+      env:
+        IPFS_IMAGE_HASH: ${{ steps.upload_images.outputs.ipfs_image_hash }}
+        IPFS_METADATA_HASH: ${{ steps.upload_metadata.outputs.ipfs_metadata_hash }}
+        IPFS_IMAGE_BASE: https://easter.infura-ipfs.io/ipfs/

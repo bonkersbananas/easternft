@@ -7,9 +7,9 @@ require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
 
 const default_network = "matic";
-const api_url = process.env.API_URL || process.env.ALCHEMY_API_URL;
-const private_key = process.env.PRIVATE_KEY || process.env.TESTNET_PRIVATE_KEY;
-const etherscan_api_key = process.env.POLYGONSCAN_API_KEY || process.env.ETHERSCAN_API_KEY;
+const api_url = process.env.ALCHEMY_API_URL || process.env.API_URL;
+const private_key = process.env.TESTNET_PRIVATE_KEY || process.env.PRIVATE_KEY;
+const etherscan_api_key = process.env.ETHERSCAN_API_KEY || process.env.POLYGONSCAN_API_KEY;
 
 
 module.exports = {

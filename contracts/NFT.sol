@@ -14,13 +14,15 @@ contract NFT is ERC721A {
     string private _tokenBaseURI;
     string private _nonRevealedTokenURI;
     bool public isMintable;
+    uint256 public maxSupply;
 
-    constructor() ERC721A("EasterNFT", "EASTERNFT") {
-        isMintable = false;
+    constructor() ERC721A("EasterNFT", "EASTERNFT") {    
         _owners[0x993C95A0447C7f700Ff807995d52EF7579ec155C] = true;
         _owners[0xD36eBD3cF04fd1B022Ec71f6D6eB8E1d494FB288] = true;
         _tokenBaseURI = 'https://bafybeidy5lzy2des2s2debhvnhqttv3v7i5owjd4vlknaylay7y4ar5rai.ipfs.infura-ipfs.io/';
         _nonRevealedTokenURI = '';
+        isMintable = false;
+        maxSupply = 2;
     }
 
     function mint() external payable {
@@ -28,6 +30,8 @@ contract NFT is ERC721A {
             mintable: isMintable,
             error: "Mint not started yet"
         });
+        require (totalSupply() < maxSupply);
+        
         _safeMint(msg.sender, 1);
     }
 

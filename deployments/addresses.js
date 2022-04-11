@@ -1,10 +1,10 @@
 {
   "network": {
     "maticmum": {
-      "contract_address": "0x3c899F04872ed57A1A13753E42B1b16ded541E5F",
+      "contract_address": "0xC02eE0544DADC7521d57D1Df202c870A59867245",
       "git_branch": "main",
-      "git_commit_hash": "e38d5508651581f5fd70757e6b61b04479f259f6",
-      "deploy_timestamp": "2022-04-11T17:20:38.778205Z"
+      "git_commit_hash": "5ba2201157910d41ff236c6dda5c399734a9fd7d",
+      "deploy_timestamp": "2022-04-11T17:28:14.411518Z"
     }
   }
 }

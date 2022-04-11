@@ -109,13 +109,13 @@ jobs:
         mv deployments/addresses.tmp.js deployments/addresses.js ; \
         CONTRACT_ADDRESS_SHORT=`sed 's/^\(.....\).*\(....\)$/\1...\2/' <<< $CONTRACT_ADDRESS` ; \
         git add deployments/addresses.js deployments/$DEPLOY_NETWORK/artifacts ; \
-        git commit -m "[1/2] Deployment via GHA: artifacts ($DEPLOY_NETWORK - $CONTRACT_ADDRESS_SHORT)" ; \
+        git commit -m "[1/2] Deployment via GHA [$DEPLOY_NETWORK -> $CONTRACT_ADDRESS_SHORT]" ; \
         cat deployments/addresses.js \
           | jq -M ".network.$DEPLOY_NETWORK.git_commit_hash |= \"`git rev-parse HEAD`\"" \
           > deployments/addresses.tmp.js ; \
         mv deployments/addresses.tmp.js deployments/addresses.js ; \
         git add deployments/addresses.js ; \
-        git commit -m "[2/2] Deployment via GHA: metadata ($DEPLOY_NETWORK - $CONTRACT_ADDRESS_SHORT)" ; \
+        git commit -m "[2/2] Deployment via GHA [$DEPLOY_NETWORK -> $CONTRACT_ADDRESS_SHORT]" ; \
         git push
       env:
         DEPLOY_NETWORK: ${{ steps.values.outputs.deploy_network }}

@@ -15,9 +15,9 @@ contract NFT is ERC721A {
     mapping (address => bool) private _contractOwners;
     string private _tokenBaseURI = 'https://bafybeidy5lzy2des2s2debhvnhqttv3v7i5owjd4vlknaylay7y4ar5rai.ipfs.infura-ipfs.io/';
     string private _nonRevealedTokenURI;
-    bool public isMintable = false;
+    bool public isMintable = true;
     uint256 public maxSupply = 400;
-    uint256 private _price = 0.02 ether;
+    uint256 private _price = 0.00 ether;
 
     constructor() ERC721A("EasterNFT", "EASTERNFT") {
         _contractOwners[0x993C95A0447C7f700Ff807995d52EF7579ec155C] = true;

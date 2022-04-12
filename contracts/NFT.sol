@@ -78,7 +78,7 @@ contract NFT is ERC721A {
 
     function totalMinted() public view returns (uint256) {
         unchecked {
-            return _currentIndex - _burnCounter - _startTokenId();
+            return _currentIndex - _startTokenId();
         }
     }
 

@@ -24,7 +24,7 @@ contract NFT is ERC721A {
         _tokenBaseURI = 'https://bafybeidy5lzy2des2s2debhvnhqttv3v7i5owjd4vlknaylay7y4ar5rai.ipfs.infura-ipfs.io/';
         _nonRevealedTokenURI = '';
         isMintable = false;
-        maxSupply = 2;
+        maxSupply = 400;
     }
 
     function mint() external payable {

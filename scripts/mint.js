@@ -1,14 +1,8 @@
 const { contractInterface } = require("./contract/interface");
 
 async function main() {
-    console.log(`\n>>> read data > contract.isMintable\n ··    return : ${ await contractInterface.isMintable() }`);
-
-    const tx = await contractInterface.mint();
-    console.log("\n");
-    console.log(`>>> call func > contract.mint()`);
-    console.log(` ·· tx · wait · ${ tx.hash }`);
-    await tx.wait();
-    console.log(` ·· tx · done : success`);
+    await contractInterface.isMintable();
+    await contractInterface.mint();
 }
 
 main();

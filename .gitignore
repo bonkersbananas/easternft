@@ -1,6 +1,7 @@
 # artifacts and cache
 /artifacts
 /cache
+/.dev_contract
 
 # node_modules
 /node_modules

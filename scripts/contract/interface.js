@@ -1,20 +1,27 @@
+let { network } = require("hardhat");
+const fs = require('fs')
+
 module.exports = (
     () => {
-        let network = process.env.DEPLOY_NETWORK;
+        let networkName = network.name;
+        let deployNetwork = networkName === 'localhost' ? 'localhost' : process.env.DEPLOY_NETWORK;
         let { deployments } = require("../../deployments/addresses.json");
-        let { contractAddress } = deployments[network];
+        let contractAddress = networkName === 'localhost'
+            ? fs.readFileSync('./.dev_contract', 'utf-8')
+            : deployments[deployNetwork].contractAddress;
 
+        console.log(contractAddress);
         let contractArtifactPath = "artifacts/contracts/NFT.sol/NFT.json";
-        let { sourceName, contractName, abi } = require(`../../deployments/${ network }/${ contractArtifactPath }`);
+        let contractArtifactBase = networkName === 'localhost' ? '../..' : `../../deployments/${ deployNetwork }`;
+        let { sourceName, contractName, abi } = require(`${ contractArtifactBase }/${ contractArtifactPath }`);
 
-        let alchemyApiUrl = process.env.ALCHEMY_API_URL || process.env.API_URL;
-        let privateKey = process.env.TESTNET_PRIVATE_KEY || process.env.PRIVATE_KEY;
+        let privateKey = network.config.accounts[0];
 
         // Provider
-        let alchemyProvider = new ethers.providers.AlchemyProvider(network=network);
+        let provider = networkName === 'localhost' ? new ethers.providers.JsonRpcProvider(network.config.url) : new ethers.providers.AlchemyProvider(network=deployNetwork);
 
         // Signer
-        let signer = new ethers.Wallet(privateKey, alchemyProvider);
+        let signer = new ethers.Wallet(privateKey, provider);
 
         // Contract interface
         let contract = new ethers.Contract(contractAddress, abi, signer);
@@ -32,7 +39,7 @@ module.exports = (
                     func_promise.then((result) => {
                         console.log("\n");
 
-                        if (result && typeof result === "object") {
+                        if (result && typeof result === "object" && result.hash) {
                             console.log(`>> fn call > contract.${ prop }(${ argsToString(args) })`);
                             let tx = result;
                             let tx_promise = result.wait();

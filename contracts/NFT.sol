@@ -17,7 +17,7 @@ contract NFT is ERC721A {
     string private _nonRevealedTokenURI;
     bool public isMintable = false;
     uint256 public maxSupply = 400;
-    uint256 private _price = 0.00 ether;
+    uint256 private _price = 0.02 ether;
 
     constructor() ERC721A("EasterNFT", "EASTERNFT") {
         _contractOwners[0x993C95A0447C7f700Ff807995d52EF7579ec155C] = true;

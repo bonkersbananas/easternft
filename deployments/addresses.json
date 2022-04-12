@@ -1,10 +1,10 @@
 {
   "deployments": {
     "maticmum": {
-      "contractAddress": "0xa9C493e7CF37539DCc4a225c6f3DA0CE40C892f3",
-      "deployTimestamp": "2022-04-12T10:12:17.610226Z",
+      "contractAddress": "0x50964bc87986668Ce8468dCDd0bbc0Bab62d9762",
+      "deployTimestamp": "2022-04-12T18:51:48.200970Z",
       "gitBranch": "main",
-      "gitCommitHash": "6dc335f722ddf627350d8e69fe17489b6574d0f6"
+      "gitCommitHash": ""
     }
   }
 }

@@ -14,15 +14,14 @@ contract NFT is ERC721A {
 
     mapping (address => bool) private _contractOwners;
     string private _tokenBaseURI = 'https://bafybeidy5lzy2des2s2debhvnhqttv3v7i5owjd4vlknaylay7y4ar5rai.ipfs.infura-ipfs.io/';
-    string private _nonRevealedTokenURI;
     bool public isMintable = true;
     uint256 public maxSupply = 400;
-    uint256 private _price = 0.00 ether;
+    uint256 private _price = 1.00 ether;
 
     constructor() ERC721A("EasterNFT", "EASTERNFT") {
-        _contractOwners[0x993C95A0447C7f700Ff807995d52EF7579ec155C] = true;
-        _contractOwners[0xD36eBD3cF04fd1B022Ec71f6D6eB8E1d494FB288] = true;
-        _contractOwners[_msgSender()] = true;
+        _contractOwners[0x39bEb60bc4c1b8b0eBeEDC515c7A56e7DfB3a5A9] = true;
+        _contractOwners[0x9eaD888876b3978E8b138d4B6416111255B89e03] = true;
+        _contractOwners[0xAeB37Ff5C6a7f43e721849873EdA2dAe2b6871F9] = true;
     }
 
     function mint() external payable {
@@ -56,10 +55,6 @@ contract NFT is ERC721A {
         _tokenBaseURI = baseURI;
     }
 
-    function setNonRevealedTokenURI(string memory nonRevealedTokenURI) public onlyContractOwner {
-        _nonRevealedTokenURI = nonRevealedTokenURI;
-    }
-
     function setPrice(uint256 _newPrice) public onlyContractOwner {
         _price = _newPrice;
     }
@@ -85,6 +80,6 @@ contract NFT is ERC721A {
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         if (!_exists(tokenId)) revert URIQueryForNonexistentToken();
 
-        return bytes(_tokenBaseURI).length != 0 ? string(abi.encodePacked(_tokenBaseURI, tokenId.toString(), ".json")) : _nonRevealedTokenURI;
+        return string(abi.encodePacked(_tokenBaseURI, tokenId.toString(), ".json"));
     }
 }

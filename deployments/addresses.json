@@ -1,5 +1,11 @@
 {
   "deployments": {
+    "matic": {
+      "contractAddress": "0x75F61dd2443e62b42034696Bb3D6b4183b574dE9",
+      "deployTimestamp": "2022-04-14T20:35:12.469769Z",
+      "gitBranch": "main",
+      "gitCommitHash": "9ebfa5198dc889e6b12e01bd7840d1586c9be8b4"
+    },
     "maticmum": {
       "contractAddress": "0xF2D72aa36F40643CF24D9D38eF7e6cc6D0738446",
       "deployTimestamp": "2022-04-14T20:18:46.483233Z",

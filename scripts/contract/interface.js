@@ -10,7 +10,6 @@ module.exports = (
             ? fs.readFileSync('./.dev_contract', 'utf-8')
             : deployments[deployNetwork].contractAddress;
 
-        console.log(contractAddress);
         let contractArtifactPath = "artifacts/contracts/NFT.sol/NFT.json";
         let contractArtifactBase = networkName === 'localhost' ? '../..' : `../../deployments/${ deployNetwork }`;
         let { sourceName, contractName, abi } = require(`${ contractArtifactBase }/${ contractArtifactPath }`);

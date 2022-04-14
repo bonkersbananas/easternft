@@ -1,0 +1,12 @@
+{
+    "name": "ETHster NFT (Sold)",
+    "artist": "Sold",
+    "image": "a0b04439-6668-4e88-9e2f-1b716f187ae8.png",
+    "attributes": [
+        {
+            "trait_type": "artist",
+            "value": "Sold"
+        }
+    ],
+    "description": "Happy ETHster from Bankless! The ETHster hunt of 2022 is a community built project by Bankless.se."
+}
